@@ -3,9 +3,9 @@
 
 #include "mcpi_const.h"
 
-float calculate_pi()
+vec_t calculate_pi()
 {
-	float increment = 1.0 / (float)BUFFER_SIZE_SQRT;
+	vec_t increment = 1.0 / (vec_t)BUFFER_SIZE_SQRT;
 
 	int hits = 0;
 	for(int x = 0; x < BUFFER_SIZE_SQRT; x++)
@@ -13,7 +13,7 @@ float calculate_pi()
 			if((powf(x * increment, 2) + powf(y * increment, 2)) < 1)
 				++hits;
 
-	return (hits * 4) / (float)(BUFFER_SIZE_SQRT * BUFFER_SIZE_SQRT);
+	return (hits * 4) / (vec_t)(BUFFER_SIZE_SQRT * BUFFER_SIZE_SQRT);
 }
 
 int main()
