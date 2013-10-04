@@ -5,19 +5,19 @@
 
 #include "mcpi_const.h"
 
-typedef struct { int thread_id; vec_t*** buffer; int* hits; } thread_args;
+typedef struct { int thread_id; vec_t*** buffer; int_t* hits; } thread_args;
 
 void* calculate_pi_thread(void* arg)
 {
 	thread_args* args = (thread_args*)arg;
 
-	int work_size = BUFFER_SIZE_SQRT / NUM_THREADS;
-	int work_start = work_size * args->thread_id;
-	int work_end = work_start + work_size;
+	int_t work_size = BUFFER_SIZE_SQRT / NUM_THREADS;
+	int_t work_start = work_size * args->thread_id;
+	int_t work_end = work_start + work_size;
 
 	vec_t increment = 1.0 / (vec_t)BUFFER_SIZE_SQRT;
 
-	int hits = 0;
+	int_t hits = 0;
 	for(int x = work_start; x < work_end; x++)
 		for(int y = 0; y < BUFFER_SIZE_SQRT; y++)
 			if((powf((x * increment), 2) + powf(y * increment, 2)) < 1)
@@ -31,12 +31,12 @@ void* calculate_pi_thread(void* arg)
 int main()
 {
 	thread_args targs[NUM_THREADS];
-	int hits[NUM_THREADS];
+	int_t hits[NUM_THREADS];
 
 	for(int i = 0; i < NUM_THREADS; i++)
 	{
 		targs[i].thread_id = i;
-		targs[i].hits = (int*)hits;
+		targs[i].hits = (int_t*)hits;
 	}
 
 	pthread_t calcpi[NUM_THREADS];
@@ -48,7 +48,7 @@ int main()
 		pthread_join(calcpi[i], NULL);
 
 
-	int hits_sum = 0;
+	int_t hits_sum = 0;
 	for(int i = 0; i < NUM_THREADS; i++)
 		hits_sum += hits[i];
 
