@@ -5,7 +5,7 @@
 
 #include "mcpi_const.h"
 
-typedef struct { int thread_id; vec_t*** buffer; int_t* hits; } thread_args;
+typedef struct { int thread_id; int_t* hits; } thread_args;
 
 void* calculate_pi_thread(void* arg)
 {
