@@ -1,7 +1,7 @@
 CC = c99
 LD = $(CC)
 
-CFLAGS = -Wall -pipe
+CFLAGS = -Wall -pipe -ftree-vectorizer-verbose=5
 OFLAGS = 
 LFLAGS = -lm -lc -lpthread
 

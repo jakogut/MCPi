@@ -20,8 +20,7 @@ void* calculate_pi_thread(void* arg)
 	int_t hits = 0;
 	for(int x = work_start; x < work_end; x++)
 		for(int y = 0; y < BUFFER_SIZE_SQRT; y++)
-			if((powf((x * increment), 2) + powf(y * increment, 2)) < 1)
-				hits++;
+			hits += (powf(x * increment, 2) + powf(y * increment, 2) < 1);
 
 	// Huge performance hit if we increment this directly
 	args->hits[args->thread_id] = hits;
