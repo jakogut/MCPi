@@ -1,7 +1,7 @@
-CC = c99
+CC = gcc
 LD = $(CC)
 
-CFLAGS = -Wall -pipe -ftree-vectorizer-verbose=5
+CFLAGS = -std=gnu99 -Wall -pipe -march=native -fomit-frame-pointer -funroll-loops 
 OFLAGS = 
 LFLAGS = -lm -lc -lpthread
 
