@@ -9,8 +9,15 @@
 #define MIN_THREADS 1
 #define MAX_THREADS 16
 
-// How much of a performance gain is enough to consider statistically significant
-#define GAIN_FACTOR 0.05
+/* How much of a performance gain is enough to consider statistically significant.
+ * The resulting run time has to be greater than the product of GAIN_FACTOR and
+ * the projected speed increase of adding one thread.
+ *
+ * A load factor of 1 is equal to the expected performance increase of one thread running on one full core.
+ */
+
+
+#define GAIN_FACTOR 1
 
 typedef struct { int thread_id; int* num_threads; int_t* hits; } thread_args;
 
@@ -77,8 +84,8 @@ int main()
 	int best_run = 0;
 	for(int i = 0; i <= MAX_THREADS - MIN_THREADS; i++)
 	{
-		double* best = &runtime_sec_elapsed[best_run];
-		if(runtime_sec_elapsed[i] < *best - (*best * GAIN_FACTOR)) best_run = i;
+		double projected_time = (runtime_sec_elapsed[best_run] * (best_run + MIN_THREADS)) / (i + MIN_THREADS);
+		if(runtime_sec_elapsed[i] < (runtime_sec_elapsed[best_run]  - (projected_time * GAIN_FACTOR))) best_run = i;
 	}
 
 	printf("%i threads found to be optimal\n%i Cycles, %i FLOP/cycle, %f sec elapsed\n%f GFLOPS\n\n",
