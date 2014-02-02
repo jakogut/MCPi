@@ -17,7 +17,7 @@
  */
 
 
-#define GAIN_FACTOR 1
+#define GAIN_FACTOR 0.2
 
 typedef struct { int thread_id; int* num_threads; int_t* hits; } thread_args;
 
@@ -46,6 +46,7 @@ void* calculate_pi_thread(void* arg)
 int main()
 {
 	double* runtime_sec_elapsed = calloc(sizeof(double), (MAX_THREADS - MIN_THREADS) + 1);
+	unsigned long long hits_sum = 0;
 
 	for(int run = 0; run <= MAX_THREADS - MIN_THREADS; run++)
 	{
@@ -73,12 +74,9 @@ int main()
 	        unsigned nsec_elapsed = (end.tv_nsec - start.tv_nsec) + (1000000000 * (end.tv_sec - start.tv_sec));
 	        runtime_sec_elapsed[run] = nsec_elapsed / 1000000000.0f;
 
-		int_t hits_sum = 0;
 		for(int i = 0; i < num_threads; i++)
 			hits_sum += hits[i];
 
-		// Uncomment to print PI approximations for each run
-		//printf("%f\n", (hits_sum * 4) / (vec_t)(BUFFER_SIZE_SQRT * BUFFER_SIZE_SQRT));
 	}
 
 	int best_run = 0;
@@ -94,6 +92,8 @@ int main()
 		FLOPS_PER_CYCLE,
 		runtime_sec_elapsed[best_run],
 		((pow(BUFFER_SIZE_SQRT, 2) * FLOPS_PER_CYCLE) / runtime_sec_elapsed[best_run]) / 1000000000.0f);
+
+	printf("%f\n", (hits_sum * 4) / (vec_t)((BUFFER_SIZE_SQRT * BUFFER_SIZE_SQRT) * (MAX_THREADS - MIN_THREADS + 1)));
 
 	free(runtime_sec_elapsed);
 }
