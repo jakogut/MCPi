@@ -5,17 +5,7 @@ CFLAGS = -std=gnu99 -Wall -pipe -march=native -fomit-frame-pointer -funroll-loop
 OFLAGS = 
 LFLAGS = -lm -lc -lpthread
 
-DEBUG = no
-PROFILE = no
 OPTIMIZATION = -O3
-
-ifeq ($(DEBUG), yes)
-	CFLAGS += -g -DDEBUG
-endif
-
-ifeq ($(PROFILE), yes)
-	CFLAGS += -g -pg -DPROFILE
-endif
 
 CFLAGS += $(OPTIMIZATION)
 

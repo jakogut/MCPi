@@ -7,6 +7,6 @@ typedef unsigned int_t;
 #define BUFFER_SIZE_SQRT pow(2, 15)
 #define FLOPS_PER_CYCLE 5
 
-#define NUM_THREADS 4
+#define NUM_THREADS 6
 
 #endif

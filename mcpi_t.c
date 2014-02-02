@@ -52,7 +52,7 @@ int main()
 		pthread_join(calcpi[i], NULL);
 
         clock_gettime(CLOCK_MONOTONIC, &end);
-        unsigned nsec_elapsed = end.tv_nsec - start.tv_nsec;
+        unsigned nsec_elapsed = (end.tv_nsec - start.tv_nsec) + (1000000000 * (end.tv_sec - start.tv_sec));
         double sec_elapsed = nsec_elapsed / 1000000000.0f;
 
 	int_t hits_sum = 0;

@@ -27,7 +27,7 @@ int main()
 	printf("%f\n", calculate_pi());
 
 	clock_gettime(CLOCK_MONOTONIC, &end);
-	unsigned nsec_elapsed = end.tv_nsec - start.tv_nsec;
+	unsigned nsec_elapsed = (end.tv_nsec - start.tv_nsec) + (1000000000 * (end.tv_sec - start.tv_sec));
 	double sec_elapsed = nsec_elapsed / 1000000000.0f;
 
 	printf("%i Cycles, %i FLOP/cycle, %f sec elapsed\n%f GFLOPS\n\n",
