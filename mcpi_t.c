@@ -10,12 +10,11 @@
 #define MAX_THREADS 16
 
 /* How much of a performance gain is enough to consider statistically significant.
- * The resulting run time has to be greater than the product of GAIN_FACTOR and
- * the projected speed increase of adding one thread.
+ * The resulting run time has to be less than the product of GAIN_FACTOR and
+ * the projected speed increase (and resulting run time decrease) of adding one thread.
  *
  * A load factor of 1 is equal to the expected performance increase of one thread running on one full core.
  */
-
 
 #define GAIN_FACTOR 0.2
 
