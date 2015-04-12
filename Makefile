@@ -1,15 +1,15 @@
 CC = gcc
 LD = $(CC)
 
-CFLAGS = -std=gnu99 -Wall -pipe -march=native -fomit-frame-pointer -funroll-loops 
-OFLAGS = 
-LFLAGS = -lm -lc -lpthread
+CFLAGS = -std=gnu99 -Wall -pipe -march=native
+OFLAGS =
+LFLAGS = -lm -lc -lcl -lpthread
 
-OPTIMIZATION = -O3
+OPTIMIZATION = -Ofast
 
 CFLAGS += $(OPTIMIZATION)
 
-all: mcpi mcpi_t
+all: mcpi mcpi_t mcpi_cl
 
 mcpi: mcpi.o
 	$(LD) $< $(LFLAGS) -o mcpi
@@ -17,6 +17,8 @@ mcpi: mcpi.o
 mcpi_t: mcpi_t.o
 	$(LD) $< $(LFLAGS) -o mcpi_t
 
+mcpi_cl: mcpi_cl.o
+	$(LD) $< $(LFLAGS) -o mcpi_cl
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

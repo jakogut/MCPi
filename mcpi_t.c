@@ -16,7 +16,12 @@
  * A load factor of 1 is equal to the expected performance increase of one thread running on one full core.
  */
 
-#define GAIN_FACTOR 0.2
+#define GAIN_FACTOR 0.33
+
+#define SQUARE(n) ((n) * (n))
+
+#define ROW ((x + work_start) * increment)
+#define COLUMN(off) ((y + off) * increment)
 
 typedef struct { int thread_id; int* num_threads; int_t* hits; } thread_args;
 
@@ -32,13 +37,14 @@ void* calculate_pi_thread(void* arg)
 
 	const vec_t increment = 1.0 / (vec_t)BUFFER_SIZE_SQRT;
 
-	register int_t hits = 0;
+	int_t hits = 0;
 	for(unsigned x = 0; x < it_x; ++x)
 		for(unsigned y = 0; y < it_y; ++y)
-			hits += (powf((x + work_start) * increment, 2) + powf(y * increment, 2) < 1);
+				hits += (SQUARE(ROW) + SQUARE(COLUMN(0)) < 1);
 
 	// Huge performance hit if we increment this directly
 	args->hits[args->thread_id] = hits;
+
 	return NULL;
 }
 
